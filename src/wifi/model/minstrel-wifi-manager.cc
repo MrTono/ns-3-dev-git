@@ -419,6 +419,8 @@ MinstrelWifiManager::DoReportDataOk (WifiRemoteStation *st,
   m_minstrelTable[station->m_txrate].numRateAttempt++;
   
   NS_LOG_DEBUG("DoReportDataOk MAC="<<st->m_state->m_address<<" rateIdx="<<station->m_txrate);
+  
+  NS_LOG_DEBUG("DoReportDataOk MAC="<<st->m_state->m_address<<" rateIdx="<<station->m_txrate);
 
   UpdateRetry (station);
 
