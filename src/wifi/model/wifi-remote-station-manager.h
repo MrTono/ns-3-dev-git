@@ -337,7 +337,10 @@ public:
   * \returns the number of transmit antennas supported by the phy layer
   */
  uint32_t GetNumberOfTransmitAntennas (void);
-   std::vector <Mac48Address> GetAssociatedStations (void);
+ 
+ std::vector <Mac48Address> GetAssociatedStations (void);
+ 
+ WifiRemoteStation* GetStation (Mac48Address address, uint8_t tid);
 
  protected:
   virtual void DoDispose (void);

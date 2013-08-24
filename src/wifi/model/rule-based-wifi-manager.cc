@@ -201,7 +201,7 @@ RuleBasedWifiManager::DoGetDataTxVector (WifiRemoteStation *st,
 {
   RuleBasedWifiRemoteStation *station = (RuleBasedWifiRemoteStation *) st;
 
-  WifiTxVector vector =  WifiTxVector (GetSupported (station, station->m_rate), station->m_power, GetLongRetryCount (station), GetShortGuardInterval (station), Min (GetNoOfRx (station),GetNoOfTransmitters()), GetNoOfTx (station), GetStbc (station));
+  WifiTxVector vector =  WifiTxVector (GetSupported (station, station->m_rate), GetDefaultTxPowerLevel (), GetLongRetryCount (station), GetShortGuardInterval (station), Min (GetNumberOfReceiveAntennas (station),GetNumberOfTransmitAntennas()), GetNumberOfTransmitAntennas (station), GetStbc (station));
   m_getDataTxVector(vector);
   return vector;
 }
@@ -212,7 +212,7 @@ RuleBasedWifiManager::DoGetRtsTxVector (WifiRemoteStation *st)
   RuleBasedWifiRemoteStation *station = (RuleBasedWifiRemoteStation *) st;
   NS_LOG_DEBUG ("DoGetRtsMode m_rate=" << station->m_rate);
 
-  return WifiTxVector (GetSupported (station, 0), GetDefaultTxPowerLevel (), GetShortRetryCount (station), GetShortGuardInterval (station), Min (GetNoOfRx (station),GetNoOfTransmitters()), GetNoOfTx (station), GetStbc (station));
+  return WifiTxVector (GetSupported (station, 0), GetDefaultTxPowerLevel (), GetShortRetryCount (station), GetShortGuardInterval (station), Min (GetNumberOfReceiveAntennas (station),GetNumberOfTransmitAntennas()), GetNumberOfTransmitAntennas (station), GetStbc (station));
 }
 
 bool

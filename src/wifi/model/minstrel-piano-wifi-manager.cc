@@ -584,7 +584,7 @@ MinstrelPianoWifiManager::DoGetDataTxVector (WifiRemoteStation *st,
     }
   UpdateStats (station);
   UpdatePowerStats (station);
-  WifiTxVector vector =  WifiTxVector (GetSupported (station, station->m_txrate), station->m_txpower, GetLongRetryCount (station), GetShortGuardInterval (station), Min (GetNoOfRx (station),GetNoOfTransmitters()), GetNoOfTx (station), GetStbc (station));
+  WifiTxVector vector =  WifiTxVector (GetSupported (station, station->m_txrate), GetDefaultTxPowerLevel (), GetLongRetryCount (station), GetShortGuardInterval (station), Min (GetNumberOfReceiveAntennas (station),GetNumberOfTransmitAntennas()), GetNumberOfTransmitAntennas (station), GetStbc (station));
   m_getDataTxVector(vector);
   return vector;
 }
@@ -595,7 +595,7 @@ MinstrelPianoWifiManager::DoGetRtsTxVector (WifiRemoteStation *st)
   MinstrelPianoWifiRemoteStation *station = (MinstrelPianoWifiRemoteStation *) st;
   NS_LOG_DEBUG ("DoGetRtsMode m_txrate=" << station->m_txrate);
 
-  return WifiTxVector (GetSupported (station, 0), GetDefaultTxPowerLevel (), GetShortRetryCount (station), GetShortGuardInterval (station), Min (GetNoOfRx (station),GetNoOfTransmitters()), GetNoOfTx (station), GetStbc (station));
+  return WifiTxVector (GetSupported (station, 0), GetDefaultTxPowerLevel (), GetShortRetryCount (station), GetShortGuardInterval (station), Min (GetNumberOfReceiveAntennas (station),GetNumberOfTransmitAntennas()), GetNumberOfTransmitAntennas (station), GetStbc (station));
 }
 
 bool
