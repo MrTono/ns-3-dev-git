@@ -168,6 +168,7 @@ private:
 
   /// Provides uniform random variables.
   Ptr<UniformRandomVariable> m_uniformRandomVariable;
+  TracedCallback<uint32_t> m_rateChange;
 };
 
 } // namespace ns3
