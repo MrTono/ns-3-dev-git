@@ -46,6 +46,9 @@ ConstantRateWifiManager::GetTypeId (void)
                    StringValue ("OfdmRate6Mbps"),
                    MakeWifiModeAccessor (&ConstantRateWifiManager::m_ctlMode),
                    MakeWifiModeChecker ())
+   .AddTraceSource ("DoGetDataTxVector",
+                    "A TxVector is ask for a new data frame",
+                    MakeTraceSourceAccessor (&ConstantRateWifiManager::m_getDataTxVector))
   ;
   return tid;
 }
@@ -113,6 +116,8 @@ ConstantRateWifiManager::DoGetDataTxVector (WifiRemoteStation *st, uint32_t size
 {
   NS_LOG_FUNCTION (this << st << size);
   return WifiTxVector (m_dataMode, GetDefaultTxPowerLevel (), GetLongRetryCount (st), GetShortGuardInterval (st), Min (GetNumberOfReceiveAntennas (st),GetNumberOfTransmitAntennas()), GetNumberOfTransmitAntennas (st), GetStbc (st));
+  m_getDataTxVector (vector);
+  return vector;
 }
 WifiTxVector
 ConstantRateWifiManager::DoGetRtsTxVector (WifiRemoteStation *st)
