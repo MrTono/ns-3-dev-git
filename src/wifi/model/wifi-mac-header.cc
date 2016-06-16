@@ -110,6 +110,15 @@ WifiMacHeader::SetAssocResp (void)
   m_ctrlType = TYPE_MGT;
   m_ctrlSubtype = 1;
 }
+
+void
+WifiMacHeader::SetDisassocReq (void) // Agregada el 4 de feb para el update de los sta
+{
+  m_ctrlType = TYPE_MGT;
+  m_ctrlSubtype = 10;
+}
+
+
 void
 WifiMacHeader::SetProbeReq (void)
 {

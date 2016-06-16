@@ -229,6 +229,36 @@ StaWifiMac::SendAssociationRequest (void)
 }
 
 void
+StaWifiMac::SendDisassociationRequest (void)
+{
+  NS_LOG_FUNCTION (this << GetBssid ());
+  WifiMacHeader hdr;
+  hdr.SetAssocReq ();
+  hdr.SetAddr1 (GetBssid ());
+  hdr.SetAddr2 (GetAddress ());
+  hdr.SetAddr3 (GetBssid ());
+  hdr.SetDsNotFrom ();
+  hdr.SetDsNotTo ();
+  Ptr<Packet> packet = Create<Packet> ();
+  MgtAssocRequestHeader assoc;
+  assoc.SetSsid (GetSsid ());
+  assoc.SetSupportedRates (GetSupportedRates ());
+  if (m_htSupported)
+    {
+      assoc.SetHtCapabilities (GetHtCapabilities());
+      hdr.SetNoOrder();
+    }
+
+  packet->AddHeader (assoc);
+
+  // The standard is not clear on the correct queue for management
+  // frames if we are a QoS AP. The approach taken here is to always
+  // use the DCF for these regardless of whether we have a QoS
+  // association or not.
+  m_dca->Queue (packet, hdr);
+}
+
+void
 StaWifiMac::TryToEnsureAssociated (void)
 {
   NS_LOG_FUNCTION (this);
@@ -250,8 +280,9 @@ StaWifiMac::TryToEnsureAssociated (void)
        * We try to initiate a probe request now.
        */
       m_linkDown ();
-      SetState (WAIT_PROBE_RESP);
-      SendProbeRequest ();
+     // SetState (WAIT_PROBE_RESP); Cambios hechos para el update de las sta
+     // SendProbeRequest ();
+      SendDisassociationRequest(); // agregada el 4 de feb para el update de las sta
       break;
     case WAIT_ASSOC_RESP:
       /* we have sent an assoc request so we do not need to
@@ -643,6 +674,16 @@ StaWifiMac::SetState (MacState value)
       m_deAssocLogger (GetBssid ());
     }
   m_state = value;
+}
+//New code added
+
+void
+StaWifiMac::ReAssociated (void)
+{
+  NS_LOG_FUNCTION (this);
+  if (IsAssociated())
+    SetState (BEACON_MISSED);
+  TryToEnsureAssociated ();
 }
 
 } // namespace ns3

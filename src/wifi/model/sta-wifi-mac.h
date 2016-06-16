@@ -98,6 +98,7 @@ private:
   virtual void Receive (Ptr<Packet> packet, const WifiMacHeader *hdr);
   void SendProbeRequest (void);
   void SendAssociationRequest (void);
+  void SendDisassociationRequest (void); // agregada para el uodate de las sta
   void TryToEnsureAssociated (void);
   void AssocRequestTimeout (void);
   void ProbeRequestTimeout (void);
@@ -107,6 +108,7 @@ private:
   void RestartBeaconWatchdog (Time delay);
   SupportedRates GetSupportedRates (void) const;
   void SetState (enum MacState value);
+  public:void ReAssociated (void);
 
   HtCapabilities GetHtCapabilities (void) const;
 

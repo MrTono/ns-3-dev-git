@@ -106,6 +106,7 @@ public:
 
   void SetAssocReq (void);
   void SetAssocResp (void);
+  void SetDisassocReq (void); // agregada el 4 de feb para el update de los sta
   void SetProbeReq (void);
   void SetProbeResp (void);
   void SetBeacon (void);
